@@ -43,3 +43,25 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    enabled = false
+}
+
+projects {
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        maxWarnings = 0
+        configFile = file("${rootDir}/config/checkstyle.xml")
+        toolVersion = '10.17.0'
+    }
+}
+
+tasks.register('installGitPreCommitHook', Copy) {
+    from new File(rootProject.rootDir, 'scripts/pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    fileMode 0775
+}
+
+compileJava.dependsOn(installGitPreCommitHook)
