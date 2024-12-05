@@ -1,0 +1,3 @@
+riot:
+  base-url: https://asia.api.riotgames.com
+  api-key: # 24시간마다 갱신해야 합니다.
