@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: your.gg
+  profiles:
+    active: local
