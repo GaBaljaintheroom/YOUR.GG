@@ -11,7 +11,7 @@ public class MatchService {
 
     private final ExternalApiManager externalApiManager;
 
-    private void getMatchDetail(int start, int end, String puuid) {
+    public void getMatchDetail(int start, int end, String puuid) {
         MatchIdsDto matchIds = externalApiManager.getMatchIds(start, end, puuid);
     }
 }

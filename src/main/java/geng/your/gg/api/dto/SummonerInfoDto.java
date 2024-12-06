@@ -7,7 +7,8 @@ public record SummonerInfoDto(
     String gameName,
     String tagLine,
     String profileImage,
-    long summonerLevel
+    long summonerLevel,
+    String puuid
 ) {
 
 }
