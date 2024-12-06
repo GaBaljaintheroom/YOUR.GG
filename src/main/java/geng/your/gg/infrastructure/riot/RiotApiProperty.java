@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "riot")
 public record RiotApiProperty(
-    String accountBaseURL,
+    String asiaBaseURL,
     String summonerBaseURL,
     String apiKey
 ) {
