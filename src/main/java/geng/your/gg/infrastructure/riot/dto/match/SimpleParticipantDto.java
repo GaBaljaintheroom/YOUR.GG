@@ -6,7 +6,6 @@ public record SimpleParticipantDto(
     int assists,
     int deaths,
     int kills,
-    int championId,
     String championName
 ) {
 
