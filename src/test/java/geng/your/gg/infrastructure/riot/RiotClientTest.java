@@ -2,9 +2,10 @@ package geng.your.gg.infrastructure.riot;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import geng.your.gg.infrastructure.riot.dto.AccountDto;
-import geng.your.gg.infrastructure.riot.dto.MatchIdsDto;
-import geng.your.gg.infrastructure.riot.dto.SummonerDto;
+import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
+import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
+import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,12 +21,7 @@ class RiotClientTest {
     @Test
     void getGameUserAccount() {
         // given & when
-        AccountDto accountDto;
-        try {
-            accountDto = riotClient.getGameUserAccount("Hide on bush", "KR1");
-        } catch (Exception e) {
-            return;
-        }
+        AccountDto accountDto = riotClient.getGameUserAccount("Hide on bush", "KR1");
 
         // then
         assertSoftly(softly -> {
@@ -40,12 +36,7 @@ class RiotClientTest {
     void getSummonerInfo() {
         // given & when
         String puuId = "a5KGfHPki4xBS6UXWY5rkL6Jyjk7wyiu-4bECy3J2z-4s7DVqsjlkOL2Q-gtSFaVu5fciizb36rTHA";
-        SummonerDto summonerDto;
-        try {
-            summonerDto = riotClient.getSummoner(puuId);
-        } catch (Exception e) {
-            return;
-        }
+        SummonerDto summonerDto = riotClient.getSummoner(puuId);
 
         // then
         assertSoftly(softly -> {
@@ -63,17 +54,32 @@ class RiotClientTest {
     void getMatchIds() {
         //given & when
         String puuId = "a5KGfHPki4xBS6UXWY5rkL6Jyjk7wyiu-4bECy3J2z-4s7DVqsjlkOL2Q-gtSFaVu5fciizb36rTHA";
-        MatchIdsDto matchIdsDto;
-        try {
-            matchIdsDto = riotClient.getMatchIds(0, 20, puuId);
-        } catch (Exception e) {
-            return;
-        }
+        MatchIdsDto matchIdsDto = riotClient.getMatchIds(0, 20, puuId);
 
+        //then
         assertSoftly(
             softly -> {
                 softly.assertThat(matchIdsDto).isNotNull();
                 softly.assertThat(matchIdsDto.matchIds()).isNotEmpty();
+            }
+        );
+    }
+
+    @Test
+    void getMatch() {
+        //given & when
+        String matchId = "KR_7277245614";
+        MatchDto matchDto = riotClient.getMatch(matchId);
+
+        //then
+        assertSoftly(
+            softly -> {
+                softly.assertThat(matchDto).isNotNull();
+                softly.assertThat(matchDto.info()).isNotNull();
+                softly.assertThat(matchDto.info().gameDuration()).isNotNull();
+                softly.assertThat(matchDto.info().gameMode()).isNotNull();
+                softly.assertThat(matchDto.info().gameStartTimestamp()).isNotNull();
+                softly.assertThat(matchDto.info().participants()).isNotEmpty();
             }
         );
     }
