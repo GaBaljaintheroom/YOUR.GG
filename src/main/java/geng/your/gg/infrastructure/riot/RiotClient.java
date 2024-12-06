@@ -1,6 +1,7 @@
 package geng.your.gg.infrastructure.riot;
 
 import geng.your.gg.infrastructure.riot.dto.AccountDto;
+import geng.your.gg.infrastructure.riot.dto.SummonerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +15,33 @@ public class RiotClient {
     private final RiotApiProperty riotApiProperty;
 
     public AccountDto getGameUserAccount(String gameName, String tagLine) {
-        ResponseEntity<AccountDto> origin = RestClient.create(
-                riotApiProperty.baseURL() + getUserAccountURL(gameName, tagLine))
+        ResponseEntity<AccountDto> response = RestClient.create(
+                riotApiProperty.accountBaseURL() + getUserAccountURL(gameName, tagLine))
             .get()
             .headers(this::createHeaders)
             .retrieve()
             .toEntity(AccountDto.class);
 
-        return origin.getBody();
+        return response.getBody();
+    }
+
+    public SummonerDto getSummoner(String puuid) {
+        ResponseEntity<SummonerDto> response = RestClient.create(
+            riotApiProperty.summonerBaseURL() + getSummonerURL(puuid))
+            .get()
+            .headers(this::createHeaders)
+            .retrieve()
+            .toEntity(SummonerDto.class);
+
+        return response.getBody();
     }
 
     private static String getUserAccountURL(String gameName, String tagLine) {
         return String.format("/riot/account/v1/accounts/by-riot-id/%s/%s", gameName, tagLine);
+    }
+
+    private String getSummonerURL(String puuid) {
+        return String.format("/lol/summoner/v4/summoners/by-puuid/%s", puuid);
     }
 
     private void createHeaders(HttpHeaders headers) {
