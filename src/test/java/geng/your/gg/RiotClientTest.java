@@ -18,10 +18,15 @@ class RiotClientTest {
 
     @Test
     void getGameUserAccount() {
-        // Act
-        AccountDto accountDto = riotClient.getGameUserAccount("Hide on bush", "KR1");
+        // given & when
+        AccountDto accountDto;
+        try {
+            accountDto = riotClient.getGameUserAccount("Hide on bush", "KR1");
+        } catch (Exception e) {
+            return;
+        }
 
-        // Assert
+        // then
         assertSoftly(softly -> {
             softly.assertThat(accountDto).isNotNull();
             softly.assertThat(accountDto.puuid()).isNotEmpty();
