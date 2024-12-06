@@ -1,8 +1,11 @@
 package geng.your.gg.infrastructure.riot;
 
 import geng.your.gg.infrastructure.riot.dto.AccountDto;
+import geng.your.gg.infrastructure.riot.dto.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.SummonerDto;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,7 +19,7 @@ public class RiotClient {
 
     public AccountDto getGameUserAccount(String gameName, String tagLine) {
         ResponseEntity<AccountDto> response = RestClient.create(
-                riotApiProperty.accountBaseURL() + getUserAccountURL(gameName, tagLine))
+                riotApiProperty.asiaBaseURL() + getUserAccountURL(gameName, tagLine))
             .get()
             .headers(this::createHeaders)
             .retrieve()
@@ -36,12 +39,27 @@ public class RiotClient {
         return response.getBody();
     }
 
+    public MatchIdsDto getMatchIds(int start, int count, String puuid) {
+        ResponseEntity<List<String>> response = RestClient.create(
+                riotApiProperty.asiaBaseURL() + getMatchIdsURL(puuid, start, count))
+            .get()
+            .headers(this::createHeaders)
+            .retrieve()
+            .toEntity(new ParameterizedTypeReference<List<String>>() {});
+
+        return MatchIdsDto.from(response.getBody());
+    }
+
     private static String getUserAccountURL(String gameName, String tagLine) {
         return String.format("/riot/account/v1/accounts/by-riot-id/%s/%s", gameName, tagLine);
     }
 
     private String getSummonerURL(String puuid) {
         return String.format("/lol/summoner/v4/summoners/by-puuid/%s", puuid);
+    }
+
+    private String getMatchIdsURL(String puuid, int start, int end) {
+        return String.format("/lol/match/v5/matches/by-puuid/%s/ids?start=%d&count=%d", puuid, start, end);
     }
 
     private void createHeaders(HttpHeaders headers) {
