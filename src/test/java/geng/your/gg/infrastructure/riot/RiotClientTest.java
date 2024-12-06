@@ -1,8 +1,7 @@
-package geng.your.gg;
+package geng.your.gg.infrastructure.riot;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import geng.your.gg.infrastructure.riot.RiotClient;
 import geng.your.gg.infrastructure.riot.dto.AccountDto;
 import geng.your.gg.infrastructure.riot.dto.SummonerDto;
 import org.junit.jupiter.api.Test;
