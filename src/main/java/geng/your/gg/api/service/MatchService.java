@@ -1,7 +1,7 @@
 package geng.your.gg.api.service;
 
 import geng.your.gg.api.manager.ExternalApiManager;
-import geng.your.gg.infrastructure.riot.dto.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

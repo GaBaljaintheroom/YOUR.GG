@@ -1,8 +1,9 @@
 package geng.your.gg.infrastructure.riot;
 
-import geng.your.gg.infrastructure.riot.dto.AccountDto;
-import geng.your.gg.infrastructure.riot.dto.MatchIdsDto;
-import geng.your.gg.infrastructure.riot.dto.SummonerDto;
+import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
+import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
+import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -30,7 +31,7 @@ public class RiotClient {
 
     public SummonerDto getSummoner(String puuid) {
         ResponseEntity<SummonerDto> response = RestClient.create(
-            riotApiProperty.summonerBaseURL() + getSummonerURL(puuid))
+                riotApiProperty.summonerBaseURL() + getSummonerURL(puuid))
             .get()
             .headers(this::createHeaders)
             .retrieve()
@@ -45,9 +46,21 @@ public class RiotClient {
             .get()
             .headers(this::createHeaders)
             .retrieve()
-            .toEntity(new ParameterizedTypeReference<List<String>>() {});
+            .toEntity(new ParameterizedTypeReference<List<String>>() {
+            });
 
         return MatchIdsDto.from(response.getBody());
+    }
+
+    public MatchDto getMatch(String matchId) {
+        ResponseEntity<MatchDto> response = RestClient.create(
+                riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
+            .get()
+            .headers(this::createHeaders)
+            .retrieve()
+            .toEntity(MatchDto.class);
+
+        return response.getBody();
     }
 
     private static String getUserAccountURL(String gameName, String tagLine) {
@@ -59,7 +72,12 @@ public class RiotClient {
     }
 
     private String getMatchIdsURL(String puuid, int start, int end) {
-        return String.format("/lol/match/v5/matches/by-puuid/%s/ids?start=%d&count=%d", puuid, start, end);
+        return String.format("/lol/match/v5/matches/by-puuid/%s/ids?start=%d&count=%d", puuid,
+            start, end);
+    }
+
+    private String getMatchURL(String matchId) {
+        return String.format("/lol/match/v5/matches/%s", matchId);
     }
 
     private void createHeaders(HttpHeaders headers) {

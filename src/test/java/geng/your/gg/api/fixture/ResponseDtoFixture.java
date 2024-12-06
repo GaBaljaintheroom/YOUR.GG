@@ -2,7 +2,7 @@ package geng.your.gg.api.fixture;
 
 
 import geng.your.gg.api.dto.SummonerInfoDto;
-import geng.your.gg.infrastructure.riot.dto.AccountDto;
+import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 
 public class ResponseDtoFixture {
 
