@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record SummonerInfoDto(
     String gameName,
-    String tageLine,
+    String tagLine,
     String profileImage,
     long summonerLevel
 ) {

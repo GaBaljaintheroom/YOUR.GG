@@ -21,13 +21,13 @@ public class ProfileController {
         return "profile";
     }
 
-    @GetMapping("/search/match/{gameName}/{tageLine}")
+    @GetMapping("/search/match/{gameName}/{tagLine}")
     public String searchMatch(
         @PathVariable("gameName") String gameName,
-        @PathVariable("tageLine") String tageLine,
+        @PathVariable("tagLine") String tagLine,
         Model model
     ) {
-        SummonerInfoDto summonerInfo = userService.getSummonerInfo(gameName, tageLine);
+        SummonerInfoDto summonerInfo = userService.getSummonerInfo(gameName, tagLine);
 
         model.addAttribute("summonerInfo", summonerInfo);
 

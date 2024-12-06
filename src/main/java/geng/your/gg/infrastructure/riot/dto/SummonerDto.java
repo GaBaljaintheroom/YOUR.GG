@@ -14,7 +14,7 @@ public record SummonerDto(
     public SummonerInfoDto toInfoDto(String gameName, String tagLine) {
         return SummonerInfoDto.builder()
             .gameName(gameName)
-            .tageLine(tagLine)
+            .tagLine(tagLine)
             .profileImage(
                 "http://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/"
                  + profileIconId + ".png")
