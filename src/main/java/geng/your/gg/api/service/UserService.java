@@ -2,7 +2,7 @@ package geng.your.gg.api.service;
 
 import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.manager.ExternalApiManager;
-import geng.your.gg.infrastructure.riot.dto.AccountDto;
+import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

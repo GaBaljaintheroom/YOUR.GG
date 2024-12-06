@@ -31,6 +31,45 @@
     </div>
   </div>
 
+  <!-- 매치 정보 -->
+  <!-- 매치 정보 -->
+  <div th:if="${simpleMatchInfo != null}" class="match-info-container mt-4">
+    <h3>소환사의 협곡 기록</h3>
+    <div class="match-list">
+      <div th:each="match : ${simpleMatchInfo}"
+           class="match-item p-4 mb-3 rounded shadow-sm"
+           th:style="${match.info.participant.win} ? 'background-color: #e3f2fd; border-left: 5px solid #90caf9;' : 'background-color: #ffebee; border-left: 5px solid #ef9a9a;'">
+        <div class="row align-items-center">
+          <!-- 승리 여부와 이미지 -->
+          <div class="col-md-4 d-flex justify-content-start align-items-center gap-xl-5">
+            <p th:if="${match.info.participant.win}" class="font-weight-bold" style="color: blue; font-size: 16px;">승리</p>
+            <p th:if="${!match.info.participant.win}" class="font-weight-bold" style="color: red; font-size: 16px;">패배</p>
+            <img th:src="@{${match.info.participant.championImage}}" alt="Champion" width="70" class="rounded-circle">
+          </div>
+          <!-- K / D / A, 게임 시간, 게임 시작 시간 -->
+          <div class="col-md-6">
+            <div class="row">
+              <!-- K / D / A -->
+              <div class="col-4 text-center align-top">
+                <p th:text="'K/D/A: ' + ${match.info.participant.kills} + '/' + ${match.info.participant.deaths} + '/' + ${match.info.participant.assists}"
+                   style="font-size: 20px; font-weight: 500;"></p>
+              </div>
+              <!-- 게임 시간 -->
+              <div class="col-4 text-center align-top">
+                <p th:text="'게임 시간: ' + ${match.info.gameDuration}" style="font-size: 20px; font-weight: 500;"></p>
+              </div>
+              <!-- 게임 시작 시간 -->
+              <div class="col-4 text-center align-top">
+                <p th:text="'시작 시간: ' + ${#dates.format(match.info.gameStartTime, 'yyyy-MM-dd HH:mm:ss')}"
+                   style="font-size: 20px; font-weight: 500; white-space: nowrap;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script layout:fragment="script" type="text/javascript">
