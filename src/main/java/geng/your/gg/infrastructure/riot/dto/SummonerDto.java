@@ -19,6 +19,7 @@ public record SummonerDto(
                 "http://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/"
                  + profileIconId + ".png")
             .summonerLevel(summonerLevel)
+            .puuid(puuid)
             .build();
     }
 }

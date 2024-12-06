@@ -1,6 +1,7 @@
 package geng.your.gg.api;
 
 import geng.your.gg.api.dto.SummonerInfoDto;
+import geng.your.gg.api.service.MatchService;
 import geng.your.gg.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProfileController {
 
     private final UserService userService;
+    private final MatchService matchService;
 
     @GetMapping
     public String profile() {
@@ -28,6 +30,7 @@ public class ProfileController {
         Model model
     ) {
         SummonerInfoDto summonerInfo = userService.getSummonerInfo(gameName, tagLine);
+        matchService.getMatchDetail(0, 20, summonerInfo.puuid());
 
         model.addAttribute("summonerInfo", summonerInfo);
 
