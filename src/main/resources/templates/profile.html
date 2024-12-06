@@ -1,19 +1,52 @@
 <html lang="ko" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <div layout:fragment="content" class="container my-3">
   <div class="d-flex justify-content-center">
-    <form class="row g-3 align-items-center">
+    <form class="row g-3 align-items-center" id="searchForm">
       <div class="col-auto">
         <input
             type="text"
+            id="searchQuery"
             name="query"
             class="form-control"
             placeholder="소환사명을 입력하세요"
             aria-label="Search">
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary" type="submit">검색</button>
+        <button class="btn btn-primary" type="button" onclick="handleSearchMath()">검색</button>
       </div>
     </form>
   </div>
+
+  <!-- 검색 후 소환사 정보 출력 -->
+  <div th:if="${summonerInfo != null}" class="summoner-info-container mt-4 p-3" style="background-color: #f7f7f7; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+    <div class="summoner-info d-flex align-items-center justify-content-start">
+      <img th:src="@{${summonerInfo.profileImage}}" alt="Profile Image" class="profile-image" width="100" style="border-radius: 50%; margin-right: 20px;">
+      <div class="info-text">
+        <h3>
+          <span th:text="${summonerInfo.gameName}"></span>
+          <span style="color: #4a4a4a;" th:text="' #' + ${summonerInfo.tageLine()}"></span>
+        </h3>
+        <h4><span th:text="${summonerInfo.summonerLevel} + ' LEVEL'"></span></h4>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<script layout:fragment="script" type="text/javascript">
+  function handleSearchMath() {
+    const query = document.getElementById("searchQuery").value.trim();
+
+    if (!query) {
+      alert("검색어를 입력해주세요.");
+      return;
+    }
+
+    const [gameName, tageLine] = query.split("#");
+
+    const finalTageLine = tageLine || "KR1";
+
+    window.location.href = `/ko/kr/profile/search/match/${gameName}/${finalTageLine}`;
+  }
+</script>
 </html>

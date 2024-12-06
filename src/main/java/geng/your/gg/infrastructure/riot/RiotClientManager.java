@@ -18,8 +18,8 @@ public class RiotClientManager implements ExternalApiManager {
     }
 
     @Override
-    public SummonerInfoDto getSummonerInfo(String name, String puuid) {
-        return riotClient.getSummoner(puuid).toInfoDto(name);
+    public SummonerInfoDto getSummonerInfo(String gameName, String tagLine, String puuid) {
+        return riotClient.getSummoner(puuid).toInfoDto(gameName, tagLine);
     }
 
 }

@@ -15,7 +15,7 @@ public class UserService {
     public SummonerInfoDto getSummonerInfo(String gameName, String tagLine) {
         AccountDto account = externalApiManager.getUserAccount(gameName, tagLine);
 
-        return externalApiManager.getSummonerInfo(gameName + tagLine, account.puuid());
+        return externalApiManager.getSummonerInfo(gameName, tagLine, account.puuid());
     }
 
 }

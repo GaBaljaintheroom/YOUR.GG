@@ -7,6 +7,6 @@ public interface ExternalApiManager {
 
     AccountDto getUserAccount(String gameName, String tagLine);
 
-    SummonerInfoDto getSummonerInfo(String name, String puuid);
+    SummonerInfoDto getSummonerInfo(String gameName, String tagLine, String puuid);
 
 }

@@ -11,9 +11,10 @@ public record SummonerDto(
     long summonerLevel
 ) {
 
-    public SummonerInfoDto toInfoDto(String name) {
+    public SummonerInfoDto toInfoDto(String gameName, String tagLine) {
         return SummonerInfoDto.builder()
-            .name(name)
+            .gameName(gameName)
+            .tageLine(tagLine)
             .profileImage(
                 "http://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/"
                  + profileIconId + ".png")
