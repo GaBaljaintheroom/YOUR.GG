@@ -42,7 +42,7 @@ class RiotClientTest {
         String puuId = "a5KGfHPki4xBS6UXWY5rkL6Jyjk7wyiu-4bECy3J2z-4s7DVqsjlkOL2Q-gtSFaVu5fciizb36rTHA";
         SummonerDto summonerDto;
         try {
-            summonerDto = riotClient.getSummonerInfo(puuId);
+            summonerDto = riotClient.getSummoner(puuId);
         } catch (Exception e) {
             return;
         }

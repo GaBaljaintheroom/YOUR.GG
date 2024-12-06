@@ -25,7 +25,7 @@ public class RiotClient {
         return response.getBody();
     }
 
-    public SummonerDto getSummonerInfo(String puuid) {
+    public SummonerDto getSummoner(String puuid) {
         ResponseEntity<SummonerDto> response = RestClient.create(
             riotApiProperty.summonerBaseURL() + getSummonerURL(puuid))
             .get()
