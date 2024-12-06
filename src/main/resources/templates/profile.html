@@ -1,0 +1,19 @@
+<html lang="ko" layout:decorate="~{layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<div layout:fragment="content" class="container my-3">
+  <div class="d-flex justify-content-center">
+    <form class="row g-3 align-items-center">
+      <div class="col-auto">
+        <input
+            type="text"
+            name="query"
+            class="form-control"
+            placeholder="소환사명을 입력하세요"
+            aria-label="Search">
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" type="submit">검색</button>
+      </div>
+    </form>
+  </div>
+</div>
+</html>
