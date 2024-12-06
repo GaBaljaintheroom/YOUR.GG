@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - develop
-  push:
-    branches:
-      - feat/ci-#3
 
 jobs:
   build-and-deploy:
