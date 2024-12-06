@@ -1,4 +1,4 @@
-package geng.your.gg.infrastructure.riot.dto;
+package geng.your.gg.infrastructure.riot.dto.user;
 
 import geng.your.gg.api.dto.SummonerInfoDto;
 

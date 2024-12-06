@@ -1,8 +1,10 @@
 package geng.your.gg.api;
 
+import geng.your.gg.api.dto.MatchResponseDto;
 import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.service.MatchService;
 import geng.your.gg.api.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +32,11 @@ public class ProfileController {
         Model model
     ) {
         SummonerInfoDto summonerInfo = userService.getSummonerInfo(gameName, tagLine);
-        matchService.getMatchDetail(0, 20, summonerInfo.puuid());
+        List<MatchResponseDto> simpleMatchInfo = matchService.getSimpleMatchInfo(
+            0, 20, summonerInfo.puuid());
 
         model.addAttribute("summonerInfo", summonerInfo);
+        model.addAttribute("simpleMatchInfo", simpleMatchInfo);
 
         return "profile";
     }
