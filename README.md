@@ -13,6 +13,7 @@
 - Thymeleaf
 - Javascript
 - Git/Github
+- Github Actions
 
 ### 깃 전략
 
