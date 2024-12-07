@@ -13,6 +13,6 @@ public interface ExternalApiManager {
 
     MatchIdsDto getMatchIds(int start, int count, String puuid);
 
-    SimpleMatchDto getMatch(String matchId);
+    SimpleMatchDto getSimpleMatch(String matchId);
 
 }

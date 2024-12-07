@@ -30,8 +30,8 @@ public class RiotClientManager implements ExternalApiManager {
     }
 
     @Override
-    public SimpleMatchDto getMatch(String matchId) {
-        return riotClient.getMatch(matchId);
+    public SimpleMatchDto getSimpleMatch(String matchId) {
+        return riotClient.getSimpleMatch(matchId);
     }
 
 }

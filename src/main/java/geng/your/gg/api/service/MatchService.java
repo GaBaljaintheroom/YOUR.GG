@@ -32,7 +32,7 @@ public class MatchService {
                 puuid);
 
             for (String matchId : matchIdsDto.matchIds()) {
-                SimpleMatchDto match = externalApiManager.getMatch(matchId);
+                SimpleMatchDto match = externalApiManager.getSimpleMatch(matchId);
 
                 if (canAddMatch(match)) {
                     matchDtos.add(MatchResponseDto.from(match, puuid));
