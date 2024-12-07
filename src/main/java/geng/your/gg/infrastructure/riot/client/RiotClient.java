@@ -5,13 +5,16 @@ import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
+import geng.your.gg.infrastructure.riot.exception.RiotApiExceptions;
 import geng.your.gg.infrastructure.riot.property.RiotApiProperty;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 @Component
@@ -21,57 +24,83 @@ public class RiotClient {
     private final RiotApiProperty riotApiProperty;
 
     public AccountDto getGameUserAccount(String gameName, String tagLine) {
-        ResponseEntity<AccountDto> response = RestClient.create(
-                riotApiProperty.asiaBaseURL() + getUserAccountURL(gameName, tagLine))
-            .get()
-            .headers(this::createHeaders)
-            .retrieve()
-            .toEntity(AccountDto.class);
+        ResponseEntity<AccountDto> response = ResponseEntity.of(Optional.empty());
+        try {
+            response = RestClient.create(
+                    riotApiProperty.asiaBaseURL() + getUserAccountURL(gameName, tagLine))
+                .get()
+                .headers(this::createHeaders)
+                .retrieve()
+                .toEntity(AccountDto.class);
+        } catch (HttpClientErrorException e) {
+            RiotApiExceptions.handleResponse(response);
+        }
 
         return response.getBody();
     }
 
     public SummonerDto getSummoner(String puuid) {
-        ResponseEntity<SummonerDto> response = RestClient.create(
-                riotApiProperty.summonerBaseURL() + getSummonerURL(puuid))
-            .get()
-            .headers(this::createHeaders)
-            .retrieve()
-            .toEntity(SummonerDto.class);
+        ResponseEntity<SummonerDto> response = ResponseEntity.of(Optional.empty());
+        try {
+            response = RestClient.create(
+                    riotApiProperty.summonerBaseURL() + getSummonerURL(puuid))
+                .get()
+                .headers(this::createHeaders)
+                .retrieve()
+                .toEntity(SummonerDto.class);
+
+        } catch (HttpClientErrorException e) {
+            RiotApiExceptions.handleResponse(response);
+        }
 
         return response.getBody();
     }
 
     public MatchIdsDto getMatchIds(int start, int count, String puuid) {
-        ResponseEntity<List<String>> response = RestClient.create(
-                riotApiProperty.asiaBaseURL() + getMatchIdsURL(puuid, start, count))
-            .get()
-            .headers(this::createHeaders)
-            .retrieve()
-            .toEntity(new ParameterizedTypeReference<List<String>>() {
-            });
+        ResponseEntity<List<String>> response = ResponseEntity.of(Optional.empty());
+        try {
+            response =  RestClient.create(
+                    riotApiProperty.asiaBaseURL() + getMatchIdsURL(puuid, start, count))
+                .get()
+                .headers(this::createHeaders)
+                .retrieve()
+                .toEntity(new ParameterizedTypeReference<List<String>>() {
+                });
+        } catch (HttpClientErrorException e) {
+            RiotApiExceptions.handleResponse(response);
+        }
 
         return MatchIdsDto.from(response.getBody());
     }
 
     public SimpleMatchDto getSimpleMatch(String matchId) {
-        ResponseEntity<SimpleMatchDto> response = RestClient.create(
-                riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
-            .get()
-            .headers(this::createHeaders)
-            .retrieve()
-            .toEntity(SimpleMatchDto.class);
+        ResponseEntity<SimpleMatchDto> response = ResponseEntity.of(Optional.empty());
+        try {
+            response = RestClient.create(
+                    riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
+                .get()
+                .headers(this::createHeaders)
+                .retrieve()
+                .toEntity(SimpleMatchDto.class);
+        } catch (HttpClientErrorException e) {
+            RiotApiExceptions.handleResponse(response);
+        }
 
         return response.getBody();
     }
 
     public DetailMatchDto getDetailMatch(String matchId) {
-        ResponseEntity<DetailMatchDto> response = RestClient.create(
-                riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
-            .get()
-            .headers(this::createHeaders)
-            .retrieve()
-            .toEntity(DetailMatchDto.class);
+        ResponseEntity<DetailMatchDto> response = ResponseEntity.of(Optional.empty());
+        try {
+            response = RestClient.create(
+                    riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
+                .get()
+                .headers(this::createHeaders)
+                .retrieve()
+                .toEntity(DetailMatchDto.class);
+        } catch (HttpClientErrorException e) {
+            RiotApiExceptions.handleResponse(response);
+        }
 
         return response.getBody();
     }
