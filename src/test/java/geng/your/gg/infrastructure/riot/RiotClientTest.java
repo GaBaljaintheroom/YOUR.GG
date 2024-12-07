@@ -2,6 +2,7 @@ package geng.your.gg.infrastructure.riot;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import geng.your.gg.infrastructure.riot.client.RiotClient;
 import geng.your.gg.infrastructure.riot.dto.match.DetailMatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;

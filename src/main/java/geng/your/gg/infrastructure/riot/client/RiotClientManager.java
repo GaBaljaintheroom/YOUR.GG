@@ -1,4 +1,4 @@
-package geng.your.gg.infrastructure.riot;
+package geng.your.gg.infrastructure.riot.client;
 
 import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.manager.ExternalApiManager;

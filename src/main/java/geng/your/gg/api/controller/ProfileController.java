@@ -1,4 +1,4 @@
-package geng.your.gg.api;
+package geng.your.gg.api.controller;
 
 import geng.your.gg.api.dto.DetailMatchResponseDto;
 import geng.your.gg.api.dto.SimpleMatchResponseDto;
