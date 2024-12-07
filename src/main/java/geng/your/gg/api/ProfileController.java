@@ -43,16 +43,14 @@ public class ProfileController {
     }
 
     @GetMapping("/search/match/detail/{matchId}")
-    public String searchMatchDetail(
+    public String searchMatchDetailFragment(
         @PathVariable("matchId") String matchId,
         Model model
     ) {
-        DetailMatchResponseDto detailMatchInfoByMatchId = matchService.getDetailMatchInfoByMatchId(
-            matchId);
+        DetailMatchResponseDto detailMatchInfo = matchService.getDetailMatchInfoByMatchId(matchId);
 
-        model.addAttribute("detailMatchInfoByMatchId", detailMatchInfoByMatchId);
+        model.addAttribute("detailMatchInfo", detailMatchInfo);
 
-        return "profile";
+        return "fragments/detail-match-info :: detailMatchInfoFragment";
     }
-
 }

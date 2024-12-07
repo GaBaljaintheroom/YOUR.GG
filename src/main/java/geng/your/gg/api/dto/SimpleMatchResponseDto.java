@@ -6,9 +6,9 @@ public record SimpleMatchResponseDto(
     SimpleInfoResponseDto info
 ) {
 
-    public static SimpleMatchResponseDto from(SimpleMatchDto matchDto, String puuid) {
+    public static SimpleMatchResponseDto from(SimpleMatchDto matchDto, String matchId, String puuid) {
         return new SimpleMatchResponseDto(
-            SimpleInfoResponseDto.of(matchDto.info(), puuid)
+            SimpleInfoResponseDto.of(matchDto.info(), matchId, puuid)
         );
     }
 

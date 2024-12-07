@@ -32,7 +32,6 @@
   </div>
 
   <!-- 매치 정보 -->
-  <!-- 매치 정보 -->
   <div th:if="${simpleMatchInfo != null}" class="match-info-container mt-4">
     <h3>소환사의 협곡 기록</h3>
     <div class="match-list">
@@ -49,22 +48,33 @@
           <!-- K / D / A, 게임 시간, 게임 시작 시간 -->
           <div class="col-md-6">
             <div class="row">
-              <!-- K / D / A -->
               <div class="col-4 text-center align-top">
                 <p th:text="'K/D/A: ' + ${match.info.participant.kills} + '/' + ${match.info.participant.deaths} + '/' + ${match.info.participant.assists}"
                    style="font-size: 20px; font-weight: 500;"></p>
               </div>
-              <!-- 게임 시간 -->
               <div class="col-4 text-center align-top">
                 <p th:text="'게임 시간: ' + ${match.info.gameDuration}" style="font-size: 20px; font-weight: 500;"></p>
               </div>
-              <!-- 게임 시작 시간 -->
               <div class="col-4 text-center align-top">
                 <p th:text="'시작 시간: ' + ${#dates.format(match.info.gameStartTime, 'yyyy-MM-dd HH:mm:ss')}"
                    style="font-size: 20px; font-weight: 500; white-space: nowrap;"></p>
               </div>
+              <div class="col-4 text-center align-top">
+                <button class="btn btn-info"
+                        type="button"
+                        th:attr="data-match-id=${match.info.matchId}"
+                        onclick="handleSearchDetailMatch(this.getAttribute('data-match-id'))">
+                  상세조회
+                </button>
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- 각 매치의 상세보기 데이터 컨테이너 -->
+        <div th:attr="id='detailMatchInfoContainer-' + ${match.info.matchId}"
+             class="detail-match-info-container mt-4 d-none">
+          <!-- JavaScript로 업데이트될 영역 -->
         </div>
       </div>
     </div>
@@ -87,5 +97,33 @@
 
     window.location.href = `/ko/kr/profile/search/match/${gameName}/${finalTageLine}`;
   }
+
+  function handleSearchDetailMatch(matchId) {
+    if (!matchId) {
+      alert("유효하지 않은 매치 ID입니다.");
+      return;
+    }
+
+    fetch(`/ko/kr/profile/search/match/detail/${matchId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("데이터를 불러오는데 실패했습니다.");
+      }
+      return response.text();
+    })
+    .then(data => {
+      // 특정 matchId에 해당하는 컨테이너 선택
+      const container = document.getElementById(`detailMatchInfoContainer-${matchId}`);
+      if (container) {
+        container.innerHTML = data;
+        container.classList.remove("d-none");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("상세 데이터를 가져오는 중 오류가 발생했습니다.");
+    });
+  }
+
 </script>
 </html>

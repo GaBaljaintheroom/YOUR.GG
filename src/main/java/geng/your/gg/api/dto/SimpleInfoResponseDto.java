@@ -8,13 +8,15 @@ import lombok.Builder;
 
 @Builder
 public record SimpleInfoResponseDto(
+    String matchId,
     String gameDuration,
     Date gameStartTime,
     SimpleParticipantResponseDto participant
 ) {
 
-    public static SimpleInfoResponseDto of(SimpleInfoDto infoDto, String puuid) {
+    public static SimpleInfoResponseDto of(SimpleInfoDto infoDto, String matchId, String puuid) {
         return SimpleInfoResponseDto.builder()
+            .matchId(matchId)
             .gameDuration(getFormattedGameDuration(infoDto.gameDuration()))
             .gameStartTime(getGameStartTime(infoDto.gameStartTimestamp()))
             .participant(getParticipant(infoDto, puuid))
@@ -28,10 +30,10 @@ public record SimpleInfoResponseDto(
         long seconds = gameDuration % 60;
 
         if (hours == 0) {
-            return String.format("%d분 %d초", minutes, seconds);
+            return java.lang.String.format("%d분 %d초", minutes, seconds);
         }
 
-        return String.format("%d시간 %d분 %d초", hours, minutes, seconds);
+        return java.lang.String.format("%d시간 %d분 %d초", hours, minutes, seconds);
     }
 
     private static Date getGameStartTime(long gameStartTimestamp) {

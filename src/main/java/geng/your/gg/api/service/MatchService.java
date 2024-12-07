@@ -37,7 +37,7 @@ public class MatchService {
                 SimpleMatchDto match = externalApiManager.getSimpleMatch(matchId);
 
                 if (canAddMatch(match)) {
-                    matchDtos.add(SimpleMatchResponseDto.from(match, puuid));
+                    matchDtos.add(SimpleMatchResponseDto.from(match, matchId, puuid));
                 }
 
                 if (matchDtos.size() >= REQUIRED_MATCH_COUNT) {
