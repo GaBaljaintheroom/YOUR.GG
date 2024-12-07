@@ -2,6 +2,7 @@ package geng.your.gg.infrastructure.riot;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import geng.your.gg.infrastructure.riot.dto.match.DetailMatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
@@ -66,10 +67,10 @@ class RiotClientTest {
     }
 
     @Test
-    void getMatch() {
+    void getSimpleMatch() {
         //given & when
         String matchId = "KR_7277245614";
-        SimpleMatchDto matchDto = riotClient.getMatch(matchId);
+        SimpleMatchDto matchDto = riotClient.getSimpleMatch(matchId);
 
         //then
         assertSoftly(
@@ -80,6 +81,23 @@ class RiotClientTest {
                 softly.assertThat(matchDto.info().gameMode()).isNotNull();
                 softly.assertThat(matchDto.info().gameStartTimestamp()).isNotNull();
                 softly.assertThat(matchDto.info().participants()).isNotEmpty();
+            }
+        );
+    }
+
+    @Test
+    void getDetailMatch() {
+        //given & when
+        String matchId = "KR_7277245614";
+        DetailMatchDto matchDto = riotClient.getDetailMatch(matchId);
+
+        //then
+        assertSoftly(
+            softly -> {
+                softly.assertThat(matchDto).isNotNull();
+                softly.assertThat(matchDto.info()).isNotNull();
+                softly.assertThat(matchDto.info().participants()).isNotEmpty();
+                softly.assertThat(matchDto.info().participants().get(0).challenges()).isNotNull();
             }
         );
     }
