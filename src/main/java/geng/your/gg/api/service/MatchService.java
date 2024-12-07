@@ -2,8 +2,8 @@ package geng.your.gg.api.service;
 
 import geng.your.gg.api.dto.MatchResponseDto;
 import geng.your.gg.api.manager.ExternalApiManager;
-import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,11 @@ public class MatchService {
         int requestCount = 0;
 
         while (requestCount++ < MAX_REQUESTS) {
-            MatchIdsDto matchIdsDto = externalApiManager.getMatchIds(currentStart, currentEnd, puuid);
+            MatchIdsDto matchIdsDto = externalApiManager.getMatchIds(currentStart, currentEnd,
+                puuid);
 
             for (String matchId : matchIdsDto.matchIds()) {
-                MatchDto match = externalApiManager.getMatch(matchId);
+                SimpleMatchDto match = externalApiManager.getMatch(matchId);
 
                 if (canAddMatch(match)) {
                     matchDtos.add(MatchResponseDto.from(match, puuid));
@@ -53,7 +54,7 @@ public class MatchService {
         return matchDtos;
     }
 
-    private boolean canAddMatch(MatchDto match) {
+    private boolean canAddMatch(SimpleMatchDto match) {
         return match.info().gameMode().equals(SUMMONERS_RIFT_GAME_MODE)
             && match.info().endOfGameResult().equals(END_GAME);
     }

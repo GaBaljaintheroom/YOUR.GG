@@ -2,8 +2,8 @@ package geng.your.gg.infrastructure.riot;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ class RiotClientTest {
     void getMatch() {
         //given & when
         String matchId = "KR_7277245614";
-        MatchDto matchDto = riotClient.getMatch(matchId);
+        SimpleMatchDto matchDto = riotClient.getMatch(matchId);
 
         //then
         assertSoftly(

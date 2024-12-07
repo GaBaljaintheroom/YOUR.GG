@@ -1,6 +1,6 @@
 package geng.your.gg.api.dto;
 
-import geng.your.gg.infrastructure.riot.dto.match.InfoDto;
+import geng.your.gg.infrastructure.riot.dto.match.SimpleInfoDto;
 import java.time.Instant;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -13,7 +13,7 @@ public record InfoResponseDto(
     SimpleParticipantResponseDto participant
 ) {
 
-    public static InfoResponseDto of(InfoDto infoDto, String puuid) {
+    public static InfoResponseDto of(SimpleInfoDto infoDto, String puuid) {
         return InfoResponseDto.builder()
             .gameDuration(getFormattedGameDuration(infoDto.gameDuration()))
             .gameStartTime(getGameStartTime(infoDto.gameStartTimestamp()))
@@ -38,7 +38,7 @@ public record InfoResponseDto(
         return Date.from(Instant.ofEpochMilli(gameStartTimestamp));
     }
 
-    private static SimpleParticipantResponseDto getParticipant(InfoDto infoDto, String puuid) {
+    private static SimpleParticipantResponseDto getParticipant(SimpleInfoDto infoDto, String puuid) {
         return infoDto.participants().stream()
             .filter(participant -> participant.puuid().equals(puuid))
             .findFirst()

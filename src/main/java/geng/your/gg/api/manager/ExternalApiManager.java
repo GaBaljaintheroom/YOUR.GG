@@ -1,8 +1,8 @@
 package geng.your.gg.api.manager;
 
 import geng.your.gg.api.dto.SummonerInfoDto;
-import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 
 public interface ExternalApiManager {
@@ -13,6 +13,6 @@ public interface ExternalApiManager {
 
     MatchIdsDto getMatchIds(int start, int count, String puuid);
 
-    MatchDto getMatch(String matchId);
+    SimpleMatchDto getMatch(String matchId);
 
 }

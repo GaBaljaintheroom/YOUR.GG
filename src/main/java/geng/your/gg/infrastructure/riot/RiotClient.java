@@ -1,7 +1,7 @@
 package geng.your.gg.infrastructure.riot;
 
-import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
 import java.util.List;
@@ -52,13 +52,13 @@ public class RiotClient {
         return MatchIdsDto.from(response.getBody());
     }
 
-    public MatchDto getMatch(String matchId) {
-        ResponseEntity<MatchDto> response = RestClient.create(
+    public SimpleMatchDto getMatch(String matchId) {
+        ResponseEntity<SimpleMatchDto> response = RestClient.create(
                 riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
             .get()
             .headers(this::createHeaders)
             .retrieve()
-            .toEntity(MatchDto.class);
+            .toEntity(SimpleMatchDto.class);
 
         return response.getBody();
     }
