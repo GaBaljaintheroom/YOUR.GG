@@ -7,6 +7,7 @@ import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,7 @@ class RiotClientTest {
     private RiotClient riotClient;
 
     @Test
+    @DisplayName("소환사의 계정 정보를 가져온다")
     void getGameUserAccount() {
         // given & when
         AccountDto accountDto = riotClient.getGameUserAccount("Hide on bush", "KR1");
@@ -34,6 +36,7 @@ class RiotClientTest {
     }
 
     @Test
+    @DisplayName("소환사의 정보를 가져온다")
     void getSummonerInfo() {
         // given & when
         String puuId = "a5KGfHPki4xBS6UXWY5rkL6Jyjk7wyiu-4bECy3J2z-4s7DVqsjlkOL2Q-gtSFaVu5fciizb36rTHA";
@@ -52,6 +55,7 @@ class RiotClientTest {
     }
 
     @Test
+    @DisplayName("소환사 아이디로 최근 match id 리스트를 가져온다.")
     void getMatchIds() {
         //given & when
         String puuId = "a5KGfHPki4xBS6UXWY5rkL6Jyjk7wyiu-4bECy3J2z-4s7DVqsjlkOL2Q-gtSFaVu5fciizb36rTHA";
@@ -67,6 +71,7 @@ class RiotClientTest {
     }
 
     @Test
+    @DisplayName("match id로 소환사의 협곡 매치의 간단한 정보를 가져온다")
     void getSimpleMatch() {
         //given & when
         String matchId = "KR_7277245614";
@@ -86,6 +91,7 @@ class RiotClientTest {
     }
 
     @Test
+    @DisplayName("match id로 소환사의 협곡 매치의 상세한 정보를 가져온다")
     void getDetailMatch() {
         //given & when
         String matchId = "KR_7277245614";
