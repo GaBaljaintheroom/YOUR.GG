@@ -9,6 +9,7 @@ import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +23,7 @@ public class MatchService {
 
     private final ExternalApiManager externalApiManager;
 
+    @Cacheable(value = "simpleMatchResponseCache", key = "#puuid")
     public List<SimpleMatchResponseDto> getSimpleMatchInfo(int start, int end, String puuid) {
         List<SimpleMatchResponseDto> matchDtos = new ArrayList<>();
         int currentStart = start;
@@ -56,6 +58,7 @@ public class MatchService {
         return matchDtos;
     }
 
+    @Cacheable(value = "detailMatchResponseCache", key = "#matchId")
     public DetailMatchResponseDto getDetailMatchInfoByMatchId(String matchId) {
         DetailMatchDto detailMatch = externalApiManager.getDetailMatch(matchId);
 

@@ -4,6 +4,7 @@ import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.manager.ExternalApiManager;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,6 +13,7 @@ public class UserService {
 
     private final ExternalApiManager externalApiManager;
 
+    @Cacheable(value = "summonerInfoCache", key = "#gameName + '-' + #tagLine")
     public SummonerInfoDto getSummonerInfo(String gameName, String tagLine) {
         AccountDto account = externalApiManager.getUserAccount(gameName, tagLine);
 
