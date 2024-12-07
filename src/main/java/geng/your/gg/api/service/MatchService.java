@@ -1,7 +1,9 @@
 package geng.your.gg.api.service;
 
-import geng.your.gg.api.dto.MatchResponseDto;
+import geng.your.gg.api.dto.DetailMatchResponseDto;
+import geng.your.gg.api.dto.SimpleMatchResponseDto;
 import geng.your.gg.api.manager.ExternalApiManager;
+import geng.your.gg.infrastructure.riot.dto.match.DetailMatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import java.util.ArrayList;
@@ -20,8 +22,8 @@ public class MatchService {
 
     private final ExternalApiManager externalApiManager;
 
-    public List<MatchResponseDto> getSimpleMatchInfo(int start, int end, String puuid) {
-        List<MatchResponseDto> matchDtos = new ArrayList<>();
+    public List<SimpleMatchResponseDto> getSimpleMatchInfo(int start, int end, String puuid) {
+        List<SimpleMatchResponseDto> matchDtos = new ArrayList<>();
         int currentStart = start;
         int currentEnd = end;
 
@@ -35,7 +37,7 @@ public class MatchService {
                 SimpleMatchDto match = externalApiManager.getSimpleMatch(matchId);
 
                 if (canAddMatch(match)) {
-                    matchDtos.add(MatchResponseDto.from(match, puuid));
+                    matchDtos.add(SimpleMatchResponseDto.from(match, puuid));
                 }
 
                 if (matchDtos.size() >= REQUIRED_MATCH_COUNT) {
@@ -52,6 +54,12 @@ public class MatchService {
         }
 
         return matchDtos;
+    }
+
+    public DetailMatchResponseDto getDetailMatchInfoByMatchId(String matchId) {
+        DetailMatchDto detailMatch = externalApiManager.getDetailMatch(matchId);
+
+        return DetailMatchResponseDto.from(detailMatch);
     }
 
     private boolean canAddMatch(SimpleMatchDto match) {

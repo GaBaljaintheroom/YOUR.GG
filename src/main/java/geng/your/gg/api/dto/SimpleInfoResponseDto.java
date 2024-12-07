@@ -7,14 +7,14 @@ import java.util.NoSuchElementException;
 import lombok.Builder;
 
 @Builder
-public record InfoResponseDto(
+public record SimpleInfoResponseDto(
     String gameDuration,
     Date gameStartTime,
     SimpleParticipantResponseDto participant
 ) {
 
-    public static InfoResponseDto of(SimpleInfoDto infoDto, String puuid) {
-        return InfoResponseDto.builder()
+    public static SimpleInfoResponseDto of(SimpleInfoDto infoDto, String puuid) {
+        return SimpleInfoResponseDto.builder()
             .gameDuration(getFormattedGameDuration(infoDto.gameDuration()))
             .gameStartTime(getGameStartTime(infoDto.gameStartTimestamp()))
             .participant(getParticipant(infoDto, puuid))

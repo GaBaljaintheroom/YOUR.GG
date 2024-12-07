@@ -2,6 +2,7 @@ package geng.your.gg.infrastructure.riot;
 
 import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.manager.ExternalApiManager;
+import geng.your.gg.infrastructure.riot.dto.match.DetailMatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
@@ -34,4 +35,8 @@ public class RiotClientManager implements ExternalApiManager {
         return riotClient.getSimpleMatch(matchId);
     }
 
+    @Override
+    public DetailMatchDto getDetailMatch(String matchId) {
+        return riotClient.getDetailMatch(matchId);
+    }
 }
