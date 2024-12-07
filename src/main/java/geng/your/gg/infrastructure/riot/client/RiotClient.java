@@ -1,9 +1,11 @@
-package geng.your.gg.infrastructure.riot;
+package geng.your.gg.infrastructure.riot.client;
 
-import geng.your.gg.infrastructure.riot.dto.match.MatchDto;
+import geng.your.gg.infrastructure.riot.dto.match.DetailMatchDto;
 import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
+import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import geng.your.gg.infrastructure.riot.dto.user.AccountDto;
 import geng.your.gg.infrastructure.riot.dto.user.SummonerDto;
+import geng.your.gg.infrastructure.riot.property.RiotApiProperty;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -52,13 +54,24 @@ public class RiotClient {
         return MatchIdsDto.from(response.getBody());
     }
 
-    public MatchDto getMatch(String matchId) {
-        ResponseEntity<MatchDto> response = RestClient.create(
+    public SimpleMatchDto getSimpleMatch(String matchId) {
+        ResponseEntity<SimpleMatchDto> response = RestClient.create(
                 riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
             .get()
             .headers(this::createHeaders)
             .retrieve()
-            .toEntity(MatchDto.class);
+            .toEntity(SimpleMatchDto.class);
+
+        return response.getBody();
+    }
+
+    public DetailMatchDto getDetailMatch(String matchId) {
+        ResponseEntity<DetailMatchDto> response = RestClient.create(
+                riotApiProperty.asiaBaseURL() + getMatchURL(matchId))
+            .get()
+            .headers(this::createHeaders)
+            .retrieve()
+            .toEntity(DetailMatchDto.class);
 
         return response.getBody();
     }

@@ -1,6 +1,7 @@
-package geng.your.gg.api;
+package geng.your.gg.api.controller;
 
-import geng.your.gg.api.dto.MatchResponseDto;
+import geng.your.gg.api.dto.DetailMatchResponseDto;
+import geng.your.gg.api.dto.SimpleMatchResponseDto;
 import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.service.MatchService;
 import geng.your.gg.api.service.UserService;
@@ -32,7 +33,7 @@ public class ProfileController {
         Model model
     ) {
         SummonerInfoDto summonerInfo = userService.getSummonerInfo(gameName, tagLine);
-        List<MatchResponseDto> simpleMatchInfo = matchService.getSimpleMatchInfo(
+        List<SimpleMatchResponseDto> simpleMatchInfo = matchService.getSimpleMatchInfo(
             0, 20, summonerInfo.puuid());
 
         model.addAttribute("summonerInfo", summonerInfo);
@@ -41,4 +42,15 @@ public class ProfileController {
         return "profile";
     }
 
+    @GetMapping("/search/match/detail/{matchId}")
+    public String searchMatchDetailFragment(
+        @PathVariable("matchId") String matchId,
+        Model model
+    ) {
+        DetailMatchResponseDto detailMatchInfo = matchService.getDetailMatchInfoByMatchId(matchId);
+
+        model.addAttribute("detailMatchInfo", detailMatchInfo);
+
+        return "fragments/detail-match-info :: detailMatchInfoFragment";
+    }
 }

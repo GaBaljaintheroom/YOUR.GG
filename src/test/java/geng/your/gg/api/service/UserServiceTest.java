@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import geng.your.gg.api.dto.SummonerInfoDto;
 import geng.your.gg.api.fixture.ResponseDtoFixture;
 import geng.your.gg.api.manager.ExternalApiManager;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class UserServiceTest {
@@ -15,6 +16,7 @@ class UserServiceTest {
     private final UserService userService = new UserService(externalApiManager);
 
     @Test
+    @DisplayName("소환사의 정보를 조회한다")
     void getSummonerInfo() {
         // given
         String gameName = "testGameName";

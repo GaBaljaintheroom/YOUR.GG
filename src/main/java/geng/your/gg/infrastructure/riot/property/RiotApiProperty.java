@@ -1,4 +1,4 @@
-package geng.your.gg.infrastructure.riot;
+package geng.your.gg.infrastructure.riot.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

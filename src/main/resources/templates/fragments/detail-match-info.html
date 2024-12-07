@@ -1,0 +1,79 @@
+<div th:fragment="detailMatchInfoFragment">
+  <div class="match-detail p-4 mb-3 rounded shadow-sm" style="background-color: #f7f7f7; border-radius: 8px;">
+    <h4 class="mb-4">매치 상세 정보</h4>
+
+    <!-- 딜량 -->
+    <div class="category mb-3">
+      <h5>딜량</h5>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="participant : ${detailMatchInfo.info.participants}"
+            th:style="${participant.win ? 'background-color: #d1ecf1;' : 'background-color: #f8d7da;'}">
+          <img th:src="@{${participant.championImage}}" alt="Champion" class="rounded-circle" width="30">
+          <span th:text="${participant.totalDamageDealtToChampions} + ' 데미지'"></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 골드 -->
+    <div class="category mb-3">
+      <h5>골드</h5>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="participant : ${detailMatchInfo.info.participants}"
+            th:style="${participant.win ? 'background-color: #d1ecf1;' : 'background-color: #f8d7da;'}">
+          <img th:src="@{${participant.championImage}}" alt="Champion" class="rounded-circle" width="30">
+          <span th:text="${participant.goldEarned} + ' 골드'"></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CS -->
+    <div class="category mb-3">
+      <h5>CS</h5>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="participant : ${detailMatchInfo.info.participants}"
+            th:style="${participant.win ? 'background-color: #d1ecf1;' : 'background-color: #f8d7da;'}">
+          <img th:src="@{${participant.championImage}}" alt="Champion" class="rounded-circle" width="30">
+          <span th:text="${participant.totalMinionsKilled} + ' CS'"></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 킬 관여율 -->
+    <div class="category mb-3">
+      <h5>킬 관여율</h5>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="participant : ${detailMatchInfo.info.participants}"
+            th:style="${participant.win ? 'background-color: #d1ecf1;' : 'background-color: #f8d7da;'}">
+          <img th:src="@{${participant.championImage}}" alt="Champion" class="rounded-circle" width="30">
+          <span th:text="${participant.challenges.killParticipation} + '% 관여'"></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 킬/데스/어시스트 -->
+    <div class="category mb-3">
+      <h5>Kill / Death / Assist</h5>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="participant : ${detailMatchInfo.info.participants}"
+            th:style="${participant.win ? 'background-color: #d1ecf1;' : 'background-color: #f8d7da;'}">
+          <img th:src="@{${participant.championImage}}" alt="Champion" class="rounded-circle" width="30">
+          <span th:text="${participant.kills} + '/' + ${participant.deaths} + '/' + ${participant.assists}"></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 와드 -->
+    <div class="category mb-3">
+      <h5>와드</h5>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="participant : ${detailMatchInfo.info.participants}"
+            th:style="${participant.win ? 'background-color: #d1ecf1;' : 'background-color: #f8d7da;'}">
+          <img th:src="@{${participant.championImage}}" alt="Champion" class="rounded-circle" width="30">
+          <span th:text="'와드 설치: ' + ${participant.wardsPlaced}"></span>,
+          <span th:text="'와드 제거: ' + ${participant.wardsKilled}"></span>,
+          <span th:text="'제어 와드 설치: ' + ${participant.challenges.controlWardsPlaced}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

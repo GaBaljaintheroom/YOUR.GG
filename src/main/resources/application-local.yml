@@ -1,4 +1,4 @@
 riot:
   asia-base-url: https://asia.api.riotgames.com
   summoner-base-url: https://kr.api.riotgames.com
-  api-key:  RGAPI-885a3bf8-5a4e-4035-9512-50b5a237121a # 24시간마다 갱신해야 합니다.
+  api-key: RGAPI-e013590d-8668-4d6e-9863-3366cda6335a # 24시간마다 갱신해야 합니다.
