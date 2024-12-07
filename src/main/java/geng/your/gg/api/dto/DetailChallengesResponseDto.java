@@ -1,19 +1,19 @@
 package geng.your.gg.api.dto;
 
 import geng.your.gg.infrastructure.riot.dto.match.DetailChallengesDto;
+import java.text.DecimalFormat;
 import lombok.Builder;
 
 @Builder
 public record DetailChallengesResponseDto(
-    int totalDamageDealtToChampions,
-    float killParticipation,
+    String killParticipation,
     int controlWardsPlaced
 ) {
 
     public static DetailChallengesResponseDto from(DetailChallengesDto dto) {
+        DecimalFormat df = new DecimalFormat("#.0");
         return DetailChallengesResponseDto.builder()
-            .totalDamageDealtToChampions(dto.totalDamageDealtToChampions())
-            .killParticipation(dto.killParticipation())
+            .killParticipation(df.format(dto.killParticipation() * 100))
             .controlWardsPlaced(dto.controlWardsPlaced())
             .build();
     }

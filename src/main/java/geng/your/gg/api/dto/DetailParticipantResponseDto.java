@@ -16,6 +16,7 @@ public record DetailParticipantResponseDto(
     int kills,
     int wardsPlaced,
     int wardsKilled,
+    int totalDamageDealtToChampions,
     DetailChallengesResponseDto challenges
 ) {
 
@@ -32,6 +33,7 @@ public record DetailParticipantResponseDto(
             .kills(dto.kills())
             .wardsPlaced(dto.wardsPlaced())
             .wardsKilled(dto.wardsKilled())
+            .totalDamageDealtToChampions(dto.totalDamageDealtToChampions())
             .challenges(DetailChallengesResponseDto.from(dto.challenges()))
             .build();
     }

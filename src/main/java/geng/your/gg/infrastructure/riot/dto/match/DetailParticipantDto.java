@@ -12,6 +12,7 @@ public record DetailParticipantDto(
     int kills,
     int wardsPlaced,
     int wardsKilled,
+    int totalDamageDealtToChampions,
     DetailChallengesDto challenges
 ) {
 
