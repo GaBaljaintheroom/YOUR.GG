@@ -14,6 +14,9 @@
 - 공통 : 소환사 프로필, 닉네임, 레벨
 - 기본 정보 : 챔피언 이미지, 승패 여부, K/D/A, 게임 시간, 게임 시작 시간
 - 상세 정보 : 챔피언 이미지, 딜량, 골드, CS, 킬 관여율, K/D/A, 와드(와드 설치 수, 와드 제거 수, 제어 와드 설치 수)
+<img width="628" alt="image" src="https://github.com/user-attachments/assets/c842d331-2958-4f7a-8f4f-39e83970a07e">
+<img width="644" alt="image" src="https://github.com/user-attachments/assets/0563c90c-56d5-469c-82ab-3ef6d7a14390">
+
 
 
 ## 과제 고려사항 🔎
@@ -52,6 +55,8 @@
 - 문제 해결 방안 고민: 처음 응담 속도가 개선되지 않으면, 캐시로는 한계가 있있을 것 이라고 판단했습니다. 따라서 Riot API는 각 Account, Champion, League
   등등 카테고리로 나누어져 있으므로, 현재 프로그램도 각각 카테고리마다 애플리케이션을 나누어 요청을 분산시키면, 기본 응답 속도를 개선할 수 있을 것이라고 생각이 듭니다.
   이때, 각 서버로 요청을 보낼 떄 비동기 방식으로 보낸다면, 응답 속도가 더 개선될 수 있음을 예상합니다.
+<img width="802" alt="image" src="https://github.com/user-attachments/assets/d3891d13-4c9f-4c74-8fe4-afde34fbb2a9">
+
 
 **문제점 2**: 외부 API에 의존도가 높은 서비스이므로, 외부 API 자체에 문제가 발생하거나 요청 시 문제가 발생하면 장애 전파 및 사용자 경험이 낮아집니다.
 - 문제 해결 방안 고민: 
