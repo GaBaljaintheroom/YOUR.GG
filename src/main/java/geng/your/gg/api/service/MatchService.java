@@ -8,6 +8,9 @@ import geng.your.gg.infrastructure.riot.dto.match.MatchIdsDto;
 import geng.your.gg.infrastructure.riot.dto.match.SimpleMatchDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,33 +25,42 @@ public class MatchService {
     private static final int MAX_REQUESTS = 5;
 
     private final ExternalApiManager externalApiManager;
+    private final Executor asyncExecutor;
 
     @Cacheable(value = "simpleMatchResponseCache", key = "#puuid")
     public List<SimpleMatchResponseDto> getSimpleMatchInfo(int start, int end, String puuid) {
         List<SimpleMatchResponseDto> matchDtos = new ArrayList<>();
         int currentStart = start;
-        int currentEnd = end;
-
         int requestCount = 0;
 
         while (requestCount++ < MAX_REQUESTS) {
-            MatchIdsDto matchIdsDto = externalApiManager.getMatchIds(currentStart, currentEnd,
+            MatchIdsDto matchIdsDto = externalApiManager.getMatchIds(currentStart, end,
                 puuid);
 
-            for (String matchId : matchIdsDto.matchIds()) {
-                SimpleMatchDto match = externalApiManager.getSimpleMatch(matchId);
+            List<CompletableFuture<SimpleMatchResponseDto>> futures = matchIdsDto.matchIds()
+                .stream()
+                .map(matchId -> {
+                    return CompletableFuture.supplyAsync(
+                            () -> externalApiManager.getSimpleMatch(matchId), asyncExecutor)
+                        .thenApply(match -> {
+                            return canAddMatch(match) ? SimpleMatchResponseDto.from(match,
+                                matchId, puuid) : null;
+                        });
+                })
+                .toList();
 
-                if (canAddMatch(match)) {
-                    matchDtos.add(SimpleMatchResponseDto.from(match, matchId, puuid));
-                }
+            List<SimpleMatchResponseDto> results = futures.stream()
+                .map(CompletableFuture::join)
+                .filter(Objects::nonNull)
+                .toList();
 
-                if (matchDtos.size() >= REQUIRED_MATCH_COUNT) {
-                    return matchDtos.subList(0, REQUIRED_MATCH_COUNT);
-                }
+            matchDtos.addAll(results);
+
+            if (matchDtos.size() >= REQUIRED_MATCH_COUNT) {
+                return matchDtos.subList(0, REQUIRED_MATCH_COUNT);
             }
 
-            currentStart = currentEnd + 1;
-            currentEnd += 20;
+            currentStart += end;
 
             if (matchIdsDto.matchIds().isEmpty()) {
                 break;
