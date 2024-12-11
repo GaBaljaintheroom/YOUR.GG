@@ -3,8 +3,10 @@ package geng.your.gg.api.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 import geng.your.gg.api.dto.DetailMatchResponseDto;
@@ -13,13 +15,16 @@ import geng.your.gg.api.fixture.ResponseDtoFixture;
 import geng.your.gg.api.manager.ExternalApiManager;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.Executor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MatchServiceTest {
 
     private final ExternalApiManager externalApiManager = mock(ExternalApiManager.class);
-    private final MatchService matchService = new MatchService(externalApiManager);
+    private final Executor executor = mock(Executor.class);
+    private final MatchService matchService = new MatchService(externalApiManager, executor);
 
     @Test
     @DisplayName("매치 정보를 간단 조회한다")
@@ -31,6 +36,12 @@ class MatchServiceTest {
 
         given(externalApiManager.getSimpleMatch(anyString()))
             .willReturn(ResponseDtoFixture.simpleMatchDto(10));
+
+        doAnswer(invocation -> {
+            Runnable runnable = invocation.getArgument(0);
+            runnable.run();
+            return null;
+        }).when(executor).execute(any());
 
         //when
         List<SimpleMatchResponseDto> responses = matchService.getSimpleMatchInfo(0, 20, puuid);
@@ -51,9 +62,16 @@ class MatchServiceTest {
         given(externalApiManager.getSimpleMatch(anyString()))
             .willReturn(ResponseDtoFixture.simpleMatchDto(10));
 
+        doAnswer(invocation -> {
+            Runnable runnable = invocation.getArgument(0);
+            runnable.run();
+            return null;
+        }).when(executor).execute(any());
+
         //when & then
         assertThatThrownBy(() -> matchService.getSimpleMatchInfo(0, 20, puuid))
-            .isInstanceOf(NoSuchElementException.class);
+            .isInstanceOf(CompletionException.class)
+            .hasCauseInstanceOf(NoSuchElementException.class);
     }
 
 
