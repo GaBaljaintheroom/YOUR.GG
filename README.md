@@ -57,6 +57,7 @@
   이때, 각 서버로 요청을 보낼 떄 비동기 방식으로 보낸다면, 응답 속도가 더 개선될 수 있음을 예상합니다.
 <img width="802" alt="image" src="https://github.com/user-attachments/assets/d3891d13-4c9f-4c74-8fe4-afde34fbb2a9">
 
+-> 이후 비동기 처리를 위한 JAVA CompletableFuture 적용
 
 **문제점 2**: 외부 API에 의존도가 높은 서비스이므로, 외부 API 자체에 문제가 발생하거나 요청 시 문제가 발생하면 장애 전파 및 사용자 경험이 낮아집니다.
 - 문제 해결 방안 고민: 
